@@ -13,6 +13,9 @@ Clone this github repository and install all the dependencies with:
 
 Then copy the `.env.sample` file, rename it to `.env` and add your keys.
 
+To run the wit.ai server, go to `./server` and run `npm run start` to run a
+development server.
+
 ## Running tests
 
 The tests for the server are setup with Jest. To run these, navigate
