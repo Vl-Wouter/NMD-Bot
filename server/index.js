@@ -22,6 +22,7 @@ app.post('/app', (req, res) => {
     .message(message)
     .then(data => {
       const reply = handleMessage(data);
+      console.log("PONG");
       res.json(reply);
       consola.success("Replied to message: " + reply.message);
     })
