@@ -14,7 +14,7 @@ test('Replies to "Hello"', async () => {
   let reply = null;
   try {
     const data = await client.message("Hello");
-    reply = handleMessage(data);
+    reply = await handleMessage(data);
   } catch (error) {
     consola.error(error);
   } finally {
@@ -27,7 +27,7 @@ test('Replies to "Hello there"', async () => {
   let reply = null;
   try {
     const data = await client.message("Hello there");
-    reply = handleMessage(data);
+    reply = await handleMessage(data);
 
   } catch (error) {
     consola.error(error);
@@ -42,7 +42,7 @@ test('Asks to repeat when not understanding', async () => {
   let reply = null;
   try {
     const data = await client.message("This is not understandable.");
-    reply = handleMessage(data);
+    reply = await handleMessage(data);
   } catch (error) {
     consola.error(error);
   } finally {

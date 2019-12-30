@@ -1,36 +1,5 @@
-import { Wit, log, interactive } from 'node-wit';
-import express from 'express';
-import consola from 'consola';
-import config from './config';
-import handleMessage from './js/handleMessage';
-
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({extended: true}))
-
-const client = new Wit({
-  accessToken: config.wit.serverToken,
-});
-
-/**
- * Post route for own client
- */
-app.post('/app', (req, res) => {
-  consola.info("Message received from client");
-  const { message } = req.body;
-  client
-    .message(message)
-    .then(data => {
-      const reply = handleMessage(data);
-      console.log("PONG");
-      res.json(reply);
-      consola.success("Replied to message: " + reply.message);
-    })
-    .catch(error => consola.error(error));
-});
-
-app.get("/", (req, res) => res.send("HALLOOOOOOOOOO"));
-
+import app from './app';
+import config from './config'
 /**
  * Set port and run application
  */
