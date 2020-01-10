@@ -8,26 +8,35 @@ at Artevelde University of Applied Sciences.
 
 ## Getting started
 
-Clone this github repository and install all the dependencies with:
-`npm install`
+Clone the GitHub repository and install all required dependencies:
 
-Then copy the `.env.sample` file, rename it to `.env` and add your keys.
+```bash
+npm install
+```
 
-To run the wit.ai server, go to `./server` and run `npm run start` to run a
-development server.
+Then copy the `.env.example` file, rename it to `.env` and add your keys.
+
+## Starting the server
+
+```bash
+npm run start
+```
 
 ## Running tests
 
 The tests for the server are setup with Jest. To run these, navigate
 to `./server` in your terminal and run the following command:
 
-`npm run test`
+```bash
+npm run test
+```
 
 ## Built with
 
 * Express.js
 * Wit.ai
 * Jest
+* Node.js
 * ...
 
 ## Authors
