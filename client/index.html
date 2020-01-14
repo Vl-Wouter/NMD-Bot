@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main class="container">
+      <form method="POST">
+        <input type="text" name="message" id="message" />
+        <button type="submit" id="submit">Submit</button>
+      </form>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script>
+      const socket = io("http://localhost:7777");
+      const form = document.querySelector("form");
+      form.addEventListener("submit", e => {
+        e.preventDefault();
+        socket.emit("message", document.querySelector("#message").value);
+      });
+
+      socket.on("reply", msg => {
+        console.log(msg);
+        document.querySelector(
+          ".container"
+        ).innerHTML += `<div>${msg.message}</div>`;
+      });
+    </script>
+  </body>
+</html>

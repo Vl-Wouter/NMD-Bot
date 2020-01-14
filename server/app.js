@@ -31,4 +31,4 @@ app.post('/app', async (req, res) => {
 
 app.get("/", (req, res) => res.send("HALLOOOOOOOOOO"));
 
-export default app;
+export {app, client};
