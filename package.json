@@ -1,0 +1,25 @@
+{
+  "name": "witai-chatbot",
+  "version": "1.0.0",
+  "description": "> A Chatbot for New Media Development",
+  "main": "index.js",
+  "scripts": {
+    "dev:all": "concurrently \"npm run server:start\" \"npm run client:start\"",
+    "server:start": "cd server && npm run start",
+    "client:start": "cd client && npm run serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vl-Wouter/NMD-Bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vl-Wouter/NMD-Bot/issues"
+  },
+  "homepage": "https://github.com/Vl-Wouter/NMD-Bot#readme",
+  "dependencies": {
+    "concurrently": "^5.0.2"
+  }
+}

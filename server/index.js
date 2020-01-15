@@ -16,6 +16,9 @@ const io = socket(server);
 // Socket io handling
 io.on('connection', (socket) => {
   consola.info('A user connected');
+  socket.emit('reply', {
+    message: "Hi there! I'm NMD-Bot. Welcome to my app!"
+  })
   socket.on('message', async (msg) => {
     const intents = await client.message(msg);
     const reply = await handleMessage(intents);
