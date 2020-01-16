@@ -25,3 +25,4 @@ jobs:
       env:
         CI: true
         WIT_SERVER_KEY: ${{ secrets.WIT_SERVER_KEY }}
+        MONGODB_STRING: ${{ secrets.MONGODB_STRING }}  
