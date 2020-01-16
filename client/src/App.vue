@@ -15,6 +15,7 @@
           v-for="(message, index) in chat"
           :key="index"
         />
+        <message v-if="isTyping" :message="loader" />
       </main>
       <section class="chat__action">
         <chat-form @submit.native.prevent="submitMessage" />
@@ -34,6 +35,8 @@ export default {
   },
   data: () => ({
     isConnected: false,
+    isTyping: false,
+    loader: { message: "...", author: "bot" },
     chat: []
   }),
   methods: {
@@ -44,6 +47,7 @@ export default {
         author: "client"
       });
       this.$socket.emit("message", msg);
+      this.isTyping = true;
       this.updateChatScroll();
     },
     updateChatScroll() {
@@ -61,6 +65,7 @@ export default {
     reply(msg) {
       this.chat.push({ ...msg, author: "bot" });
       this.updateChatScroll();
+      this.isTyping = false;
     }
   }
 };
@@ -71,6 +76,13 @@ html,
 body {
   margin: 0;
   padding: 0;
+}
+
+img.emoji {
+  height: 1em;
+  width: 1em;
+  margin: 0 0.05em 0 0.1em;
+  vertical-align: -0.1em;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
