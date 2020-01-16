@@ -1,50 +1,53 @@
-import BotResponse from './response';
 import handleGreeting from './entities/greeting';
 import handleGetPerson from './entities/getPerson';
-import consola from 'consola';
+import handleWeather from './entities/weather';
 
 // Get primary intent from the entities
 const getPrimaryIntent = (entities) => {
   if (Object.values(entities).length > 0) {
     return {
       entity: Object.entries(entities)[0][0],
-      intent: Object.entries(entities)[0][1][0]
+      intent: Object.entries(entities)[0][1][0],
     };
   }
-  return false
-}
+  return false;
+};
 
-const handleMessage = async ({entities}) => {
-  if(entities) {
-    if(getPrimaryIntent(entities).entity){  
-      let primary = getPrimaryIntent(entities);
+const handleMessage = async ({ entities }) => {
+  if (entities) {
+    // console.log(entities);
+    if (getPrimaryIntent(entities).entity) {
+      const primary = getPrimaryIntent(entities);
       let response = {};
-      switch(primary.intent.value) {
-        case "default_greeting":          
+      switch (primary.intent.value) {
+        case 'default_greeting':
           response = await handleGreeting(primary.intent);
           return response;
-        case "prequel_greeting":          
+        case 'prequel_greeting':
           response = await handleGreeting(primary.intent);
           return response;
-        case "get_person":
+        case 'get_person':
           response = await handleGetPerson(primary.intent);
+          return response;
+        case 'forecast':
+          response = await handleWeather(primary.intent, entities);
           return response;
         default:
           return {
-            message: "Can you please repeat that?",
+            message: 'Can you please repeat that?',
             image: null,
-          }
+          };
       }
     }
   }
   return {
-    message: "Woah buddy, text only please... 😠",
-  }
-}
+    message: 'Woah buddy, text only please... 😠',
+  };
+};
 
-//old handleMessage, for temporary reference
-//in the current version wit will always return the 'intent' entity, with potentially
-//an additional entity (e.g. 'name' or 'age')
+// old handleMessage, for temporary reference
+// in the current version wit will always return the 'intent' entity, with potentially
+// an additional entity (e.g. 'name' or 'age')
 /*
 const handleMessage = async ({entities}) => {
   if(entities) {
