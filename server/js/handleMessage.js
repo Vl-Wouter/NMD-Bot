@@ -38,7 +38,7 @@ const handleMessage = async ({entities}) => {
     }
   }
   return {
-    message: "Woah buddy, text only please...",
+    message: "Woah buddy, text only please... 😠",
   }
 }
 
