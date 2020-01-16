@@ -10,8 +10,10 @@
   "dependencies": {
     "core-js": "^3.4.4",
     "socket.io-client": "^2.3.0",
+    "twemoji": "^12.1.4",
     "vue": "^2.6.10",
-    "vue-socket.io": "^3.0.7"
+    "vue-socket.io": "^3.0.7",
+    "vue-twemoji": "^1.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",

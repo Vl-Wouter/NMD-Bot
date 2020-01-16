@@ -1,7 +1,7 @@
 <template>
   <div class="message" :class="message.author">
     <div class="message__bubble">
-      <p>{{ message.message }}</p>
+      <p v-emoji>{{ message.message }}</p>
     </div>
     <div v-if="message.image" class="message__attachment">
       <img :src="message.image" alt="image" />
@@ -13,10 +13,18 @@
 </template>
 
 <script>
+import twemoji from "twemoji";
 export default {
   name: "Message",
   props: {
     message: Object
+  },
+  directives: {
+    emoji: {
+      inserted(el) {
+        el.innerHTML = twemoji.parse(el.innerHTML);
+      }
+    }
   }
 };
 </script>
