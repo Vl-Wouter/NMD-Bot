@@ -4,13 +4,13 @@ import consola from 'consola';
 import { Person } from '../models';
 
 const handleGetPerson = async (personNameEntity) => {
-  const [primary] = personNameEntity;
+  const { value } = personNameEntity;
 
     try {
-      const person = await Person.findOne({ 'name': primary.value }).exec();
+      const person = await Person.findOne({ 'name': value }).exec();
       if (!person) {
         return {
-          message: "Sorry, ik kon " + primary.value + " niet vinden in de lijst.",
+          message: "Sorry, ik kon " + value + " niet vinden in de lijst.",
           image: null
         }
       }

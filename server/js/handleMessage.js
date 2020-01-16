@@ -3,23 +3,32 @@ import handleGreeting from './entities/greeting';
 import handleGetPerson from './entities/getPerson';
 import consola from 'consola';
 
+// Get primary intent from the entities
+const getPrimaryIntent = (entities) => {
+  if (Object.values(entities).length > 0) {
+    return {
+      entity: Object.entries(entities)[0][0],
+      intent: Object.entries(entities)[0][1][0]
+    };
+  }
+  return false
+}
+
 const handleMessage = async ({entities}) => {
   if(entities) {
-    if("intent" in entities ){   
+    if(getPrimaryIntent(entities).entity){  
+      let primary = getPrimaryIntent(entities);
       let response = {};
-      switch(entities["intent"][0].value) {
-        case "greeting":          
-          response = await handleGreeting(entities["intent"]);
+      switch(primary.intent.value) {
+        case "default_greeting":          
+          response = await handleGreeting(primary.intent);
           return response;
-          break;
         case "prequel_greeting":          
-          response = await handleGreeting(entities["intent"]);
+          response = await handleGreeting(primary.intent);
           return response;
-          break;
         case "get_person":
-          response = await handleGetPerson(entities["person_name"]);
+          response = await handleGetPerson(primary.intent);
           return response;
-          break;
         default:
           return {
             message: "Can you please repeat that?",

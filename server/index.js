@@ -35,7 +35,7 @@ server.listen(PORT, () => {
 })
 
 // connect to mongodb
-mongoose.connect(process.env.MONGODB_STRING);
+mongoose.connect(config.db.token);
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
