@@ -1,7 +1,6 @@
-import consola from 'consola';
-import BotResponse from './response';
 import handleGreeting from './entities/greeting';
 import handleGetPerson from './entities/getPerson';
+import handleWeather from './entities/weather';
 import handleGetSchedule from './entities/getSchedule';
 
 // Get primary intent from the entities
@@ -29,6 +28,9 @@ const handleMessage = async ({ entities }) => {
           return response;
         case 'get_person':
           response = await handleGetPerson(primary.intent);
+          return response;
+        case 'forecast':
+          response = await handleWeather(primary.intent, entities);
           return response;
         case 'get_schedule':
           response = await handleGetSchedule(primary.intent);
