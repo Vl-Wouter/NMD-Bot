@@ -1,6 +1,11 @@
 <template>
   <div class="message" :class="message.author">
-    <div class="message__bubble">
+    <div v-if="message.link" class="message__bubble">
+      <a :href="message.link">
+        <p sv-emoji>{{ message.message }}</p>
+      </a>
+    </div>
+    <div v-if="!message.link" class="message__bubble">
       <p v-emoji>{{ message.message }}</p>
     </div>
     <div v-if="message.image" class="message__attachment">
@@ -63,6 +68,9 @@ export default {
       background: #5f6caf;
       color: #fff;
       border-bottom-left-radius: 0;
+      a {
+        color: #fff;
+      }
     }
   }
 

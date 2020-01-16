@@ -3,10 +3,11 @@ import filterImages from '../helpers/filterImages';
 import consola from 'consola';
 
 const handleGetSchedule = async (intent) => {
-  const [primary] = intent;
+  const {value} = intent;
 
   return {
-    message: "Jouw lessenrooster is terug te vinden op mijnrooster.arteveldehogeschool.be",
+    message: "Klik hier om jouw lessenrooster te bekijken",
+    link: "https://mijnrooster.arteveldehogeschool.be"
   }
 }
 
