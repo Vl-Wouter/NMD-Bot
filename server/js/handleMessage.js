@@ -1,6 +1,7 @@
 import BotResponse from './response';
 import handleGreeting from './entities/greeting';
 import handleGetPerson from './entities/getPerson';
+import handleGetSchedule from './entities/getSchedule';
 import consola from 'consola';
 
 const handleMessage = async ({entities}) => {
@@ -18,6 +19,10 @@ const handleMessage = async ({entities}) => {
           break;
         case "get_person":
           response = await handleGetPerson(entities["person_name"]);
+          return response;
+          break;
+        case "get_schedule":
+          response = await handleGetSchedule(entities["intent"]);
           return response;
           break;
         default:
