@@ -42,7 +42,7 @@ describe('Send a message', () => {
       .expect(response => {
         const { body } = response;
         expect(body).toBeInstanceOf(Object);
-        expect(body.message).toBe("Can you please repeat that?");
+        expect(body.message).toBe("Woah buddy, text only please...");
         done();
       })
   })
