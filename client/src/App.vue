@@ -6,21 +6,35 @@
         NMD-Bot is a simple chatbot, ready to (try to...) answer any question
         you want to ask.
       </p>
-      <p>Current status: {{ isConnected ? "Connected" : "Disconnected" }}</p>
-    </section>
-    <section class="chat__window">
-      <main class="chat__history">
-        <message
-          :message="message"
-          v-for="(message, index) in chat"
-          :key="index"
-        />
-        <message v-if="isTyping" :message="loader" />
+      <main class="info__stats">
+        <h3>Stats</h3>
+        <p>
+          Connection:
+          <span class="status" :class="isConnected ? 'success' : 'danger'">{{
+            isConnected ? "Connected" : "Disconnected"
+          }}</span>
+        </p>
+        <p>
+          Active Conversation:
+          {{ activeConversation ? activeConversation : "None" }}
+        </p>
       </main>
-      <section class="chat__action">
-        <chat-form @submit.native.prevent="submitMessage" />
-      </section>
     </section>
+    <main class="chat">
+      <section class="chat__window">
+        <main class="chat__history">
+          <message
+            :message="message"
+            v-for="(message, index) in chat"
+            :key="index"
+          />
+          <message v-if="isTyping" :message="loader" />
+        </main>
+        <section class="chat__action">
+          <chat-form @submit.native.prevent="submitMessage" />
+        </section>
+      </section>
+    </main>
   </main>
 </template>
 
@@ -36,18 +50,20 @@ export default {
   data: () => ({
     isConnected: false,
     isTyping: false,
+    activeConversation: null,
     loader: { message: "...", author: "bot" },
     chat: []
   }),
   methods: {
     submitMessage() {
-      const msg = document.querySelector("#chatMessage").value;
+      const msgContainer = document.querySelector("#chatMessage");
       this.chat.push({
-        message: msg,
+        message: msgContainer.value,
         author: "client"
       });
-      this.$socket.emit("message", msg);
+      this.$socket.emit("message", msgContainer.value);
       this.isTyping = true;
+      msgContainer.value = "";
       this.updateChatScroll();
     },
     updateChatScroll() {
@@ -64,6 +80,7 @@ export default {
     },
     reply(msg) {
       this.chat.push({ ...msg, author: "bot" });
+      this.activeConversation = msg.activeIntent ? msg.activeIntent : null;
       this.updateChatScroll();
       this.isTyping = false;
     }
@@ -90,24 +107,58 @@ img.emoji {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background: #edf7fa;
   width: 100%;
   height: 100vh;
   display: flex;
+  overflow: hidden;
 }
 
 .info {
   flex: 0 0 30%;
-  background: #edf7fa;
   box-sizing: border-box;
-  padding: 32px 16px;
+  padding: 32px 32px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  text-align: left;
+
+  &__stats {
+    padding: 16px;
+    border-radius: 16px;
+    background: #5f6caf;
+    color: #fefefe;
+
+    .status {
+      padding: 8px;
+      border-radius: 8px;
+
+      &.success {
+        background: rgb(174, 230, 174);
+        color: rgb(32, 68, 32);
+      }
+
+      &.danger {
+        background: rgb(230, 174, 174);
+        color: rgb(68, 32, 32);
+      }
+    }
+  }
 }
 
 .chat {
+  flex: 0 0 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &__window {
+    border-radius: 16px;
     box-sizing: border-box;
-    padding: 16px;
-    height: 100%;
-    width: 100%;
+    padding: 32px;
+    height: 80%;
+    width: 60%;
+    background: #fff;
+    box-shadow: 0 5px 10px #00000020;
     overflow: hidden;
   }
 

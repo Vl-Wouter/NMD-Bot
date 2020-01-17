@@ -8,10 +8,12 @@ const handleWeather = async (intent, entities) => {
     const [weather] = data.daily.data;
     return {
       message: `Het weer voor ${(new Date(time)).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long' })} op de campus is: ${weather.summary} De temperaturen liggen tussen ${weather.temperatureMin} en ${weather.temperatureMax} graden.`,
+      activeIntent: null,
     };
   }
   return {
-    message: 'Ik kan het weer niet opzoeken zonder datum 🤷‍♂️',
+    message: 'Voor welke datum wil je het weer weten? 🤔',
+    activeIntent: intent,
   };
 };
 

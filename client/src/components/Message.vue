@@ -1,16 +1,23 @@
 <template>
   <div class="message" :class="message.author">
     <div class="message__bubble">
+      <img
+        v-if="message.image && message.image.is_accessory"
+        :src="message.image.url"
+        :alt="message.image.text"
+        class="accessory__image"
+      />
       <p v-emoji>{{ message.message }}</p>
+      <p v-if="message.link">
+        <a :href="message.link.url">{{ message.link.text }}</a>
+      </p>
     </div>
-    <div v-if="message.link" class="message__bubble">
-      <a :href="message.link" target="_blank">
-        <p sv-emoji>{{ message.linkText }}</p>
-      </a>
-    </div>
-    <div v-if="message.image" class="message__attachment">
+    <div
+      v-if="message.image && message.image.is_accessory == false"
+      class="message__attachment"
+    >
       <a :href="message.image" target="_blank">
-        <img :src="message.image" alt="image" />
+        <img :src="message.image.url" :alt="message.image.text" />
       </a>
     </div>
     <p class="message__author">
@@ -37,12 +44,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.accessory__image {
+  flex: 0 0 72px;
+  width: 72px;
+  border-radius: 16px;
+}
 .message {
   &__bubble {
     padding: 8px 16px;
     border-radius: 16px;
     background: #ededed;
-    max-width: 40%;
+    max-width: 55%;
+    display: flex;
   }
 
   &__attachment {
@@ -67,11 +80,20 @@ export default {
     text-align: left;
 
     .message__bubble {
-      background: #5f6caf;
-      color: #fff;
+      background: #f2f2f2;
+      flex-direction: column;
+      color: #232323;
       border-bottom-left-radius: 0;
       a {
-        color: #fff;
+        color: #5f6caf;
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 150ms ease-in-out;
+
+        &:hover {
+          color: lighten(#5f6caf, 10%);
+          transition: all 150ms ease-in-out;
+        }
       }
     }
   }
@@ -80,8 +102,8 @@ export default {
     text-align: right;
 
     .message__bubble {
-      background: #f2f2f2;
-      color: #232323;
+      background: #5f6caf;
+      color: #fff;
       border-bottom-right-radius: 0;
       margin-left: auto;
       margin-right: 0;

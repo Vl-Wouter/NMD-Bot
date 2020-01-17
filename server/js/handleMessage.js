@@ -5,54 +5,66 @@ import handleGetSchedule from './entities/schedule';
 import handleGetStudyGuide from './entities/studyGuide';
 import handleExplain from './entities/explain';
 
-// Get primary intent from the entities
+// Initialize active intent
+let activeIntent = null;
+
+/**
+ * Get primary or active intent from entitylist
+ * @param {Object[]} entities
+ */
 const getPrimaryIntent = (entities) => {
-  if (Object.values(entities).length > 0) {
-    return {
-      entity: Object.entries(entities)[0][0],
-      intent: Object.entries(entities)[0][1][0],
-    };
+  if (activeIntent) {
+    return activeIntent;
   }
-  return false;
+  if (entities.intent && activeIntent == null) {
+    return entities.intent[0].value;
+  }
+  return null;
 };
 
+/**
+ * Handles a message based on intents and builds a response
+ * @param {Object} request
+ */
 const handleMessage = async ({ entities }) => {
   if (entities) {
-    console.log(entities);
-    if (getPrimaryIntent(entities).entity) {
+    if (getPrimaryIntent(entities)) {
       const primary = getPrimaryIntent(entities);
       let response = {};
-      switch (primary.intent.value) {
+      switch (primary) {
         case 'default_greeting':
-          response = await handleGreeting(primary.intent);
-          return response;
+          response = await handleGreeting(primary);
+          break;
         case 'prequel_greeting':
-          response = await handleGreeting(primary.intent);
-          return response;
+          response = await handleGreeting(primary);
+          break;
         case 'get_person':
-          response = await handleGetPerson(primary.intent, entities);
-          return response;
-        case 'forecast':
-          response = await handleWeather(primary.intent, entities);
-          return response;
+          response = await handleGetPerson(primary, entities);
+          break;
+        case 'get_temperature':
+          response = await handleWeather(primary, entities);
+          break;
         case 'get_schedule':
-          response = await handleGetSchedule(primary.intent);
-          return response;
+          response = await handleGetSchedule(primary);
+          break;
         case 'get_study_guide':
-          response = await handleGetStudyGuide(primary.intent);
-          return response;
+          response = await handleGetStudyGuide(primary);
+          break;
         case 'explain_NMD':
-          response = await handleExplain(primary.intent);
-          return response;
+          response = await handleExplain(primary);
+          break;
         case 'explain_undefined':
-          response = await handleExplain(primary.intent);
-          return response;
+          response = await handleExplain(primary);
+          break;
         default:
-          return {
+          response = {
             message: 'Can you please repeat that?',
             image: null,
+            activeIntent: null,
           };
       }
+      activeIntent = response.activeIntent;
+      return response;
     }
   }
   return {
