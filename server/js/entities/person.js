@@ -1,9 +1,6 @@
-import consola from 'consola';
-import BotResponse from '../response';
-import filterImages from '../helpers/filterImages';
 import { Person } from '../models';
 
-const handleGetPerson = async (intent, entities) => {
+const handleGetPerson = async (entities) => {
   const { value } = entities.person_name[0];
   if ('person_name' in entities) {
     try {
