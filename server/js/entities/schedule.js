@@ -4,10 +4,10 @@ import consola from 'consola';
 
 const handleGetSchedule = async (intent) => {
   const {value} = intent;
-
   return {
-    message: "Klik hier om jouw lessenrooster te bekijken",
-    link: "https://mijnrooster.arteveldehogeschool.be"
+    message: "Het lessenrooster is te vinden op mijnrooster.arteveldehogeschool.be",
+    link: "https://mijnrooster.arteveldehogeschool.be",
+    linkText: "Klik hier om het lessenrooster te bekijken"
   }
 }
 

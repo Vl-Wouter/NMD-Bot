@@ -1,12 +1,12 @@
 <template>
   <div class="message" :class="message.author">
-    <div v-if="message.link" class="message__bubble">
-      <a :href="message.link">
-        <p sv-emoji>{{ message.message }}</p>
-      </a>
-    </div>
-    <div v-if="!message.link" class="message__bubble">
+    <div class="message__bubble">
       <p v-emoji>{{ message.message }}</p>
+    </div>
+    <div v-if="message.link" class="message__bubble">
+      <a :href="message.link" target="_blank">
+        <p sv-emoji>{{ message.linkText }}</p>
+      </a>
     </div>
     <div v-if="message.image" class="message__attachment">
       <img :src="message.image" alt="image" />

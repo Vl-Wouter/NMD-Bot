@@ -23,9 +23,9 @@ app.post('/app', async (req, res) => {
   const { message } = req.body;
   try {
     const intent = await client.message(message);
-    const { message: replyMessage, image } = await handleMessage(intent);
+    const { message: replyMessage, image, link, linkText } = await handleMessage(intent);
     consola.success("Replied to client with message")
-    res.json(new BotResponse(replyMessage, image));
+    res.json(new BotResponse(replyMessage, image, link, linkText));
   } catch (error) {
     consola.fatal(error);
   }

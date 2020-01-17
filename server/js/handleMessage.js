@@ -1,7 +1,8 @@
 import handleGreeting from './entities/greeting';
-import handleGetPerson from './entities/getPerson';
+import handleGetPerson from './entities/person';
 import handleWeather from './entities/weather';
-import handleGetSchedule from './entities/getSchedule';
+import handleGetSchedule from './entities/schedule';
+import handleExplain from './entities/explain';
 
 // Get primary intent from the entities
 const getPrimaryIntent = (entities) => {
@@ -16,6 +17,7 @@ const getPrimaryIntent = (entities) => {
 
 const handleMessage = async ({ entities }) => {
   if (entities) {
+    console.log(entities);
     if (getPrimaryIntent(entities).entity) {
       const primary = getPrimaryIntent(entities);
       let response = {};
@@ -27,13 +29,19 @@ const handleMessage = async ({ entities }) => {
           response = await handleGreeting(primary.intent);
           return response;
         case 'get_person':
-          response = await handleGetPerson(primary.intent);
+          response = await handleGetPerson(primary.intent, entities);
           return response;
         case 'forecast':
           response = await handleWeather(primary.intent, entities);
           return response;
         case 'get_schedule':
           response = await handleGetSchedule(primary.intent);
+          return response;
+        case 'explain_NMD':
+          response = await handleExplain(primary.intent);
+          return response;
+        case 'explain_undefined':
+          response = await handleExplain(primary.intent);
           return response;
         default:
           return {
