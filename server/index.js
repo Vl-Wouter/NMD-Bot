@@ -13,7 +13,6 @@ const PORT = config.serverPort || 8000;
 const server = http.createServer(app);
 const io = socket(server);
 
-
 // Socket io handling
 io.on('connection', (socket) => {
   consola.info('A user connected');
