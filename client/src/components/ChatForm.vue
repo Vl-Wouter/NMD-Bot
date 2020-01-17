@@ -29,6 +29,7 @@ form {
   }
 
   button {
+    cursor: pointer;
     flex: 0 0 18%;
     font-size: 16px;
     border-radius: 16px;

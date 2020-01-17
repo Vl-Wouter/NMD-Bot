@@ -1,38 +1,40 @@
+import consola from 'consola';
 import BotResponse from '../response';
 import filterImages from '../helpers/filterImages';
-import consola from 'consola';
 import { Person } from '../models';
 
 const handleGetPerson = async (intent, entities) => {
-  console.log("inside get person")
-  const { value } = entities.person_name
+  const { value } = entities.person_name[0];
   if ('person_name' in entities) {
     try {
-      const person = await Person.findOne({ 'name': value }).exec();
+      const person = await Person.findOne({ name: value }).exec();
       if (!person) {
         return {
-          message: "Sorry, ik kon " + value + " niet vinden in de lijst.",
-          image: null
-        }
+          message: `Sorry, ik kon ${value} niet vinden in de lijst.`,
+          image: null,
+          activeIntent: null,
+        };
       }
 
       return {
         message: person.description,
-        image: person.image
-      }
+        image: person.image,
+      };
     } catch (err) {
       console.log(err);
       return {
-        message: "Er is iets misgelopen bij het ophalen van deze persoon.",
-        image: null
-      }
+        message: 'Er is iets misgelopen bij het ophalen van deze persoon.',
+        image: null,
+        activeIntent: null,
+      };
     }
-  }else{
+  } else {
     return {
-      message: "Ik kan geen persoon opzoeken zonder een naam 🤷‍♂️",
-      image: null
-    }
+      message: 'Ik kan geen persoon opzoeken zonder een naam 🤷‍♂️',
+      image: null,
+      activeIntent: null,
+    };
   }
-}
+};
 
 export default handleGetPerson;
