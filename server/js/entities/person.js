@@ -1,6 +1,8 @@
 import { Person } from '../models';
 
 const handleGetPerson = async (entities) => {
+  console.log(entities);
+  
   const { value } = entities.person_name[0];
   if ('person_name' in entities) {
     try {
@@ -15,7 +17,11 @@ const handleGetPerson = async (entities) => {
 
       return {
         message: person.description,
-        image: person.image,
+        image: {
+          url: person.image,
+          text: person.name,
+          is_accessory: false,
+        },
       };
     } catch (err) {
       console.log(err);

@@ -39,7 +39,7 @@ const handleMessage = async ({ entities }) => {
           response = await handleGreeting(primary);
           break;
         case 'get_person':
-          response = await handleGetPerson(primary, entities);
+          response = await handleGetPerson(entities);
           break;
         case 'get_temperature':
           response = await handleWeather(primary, entities);

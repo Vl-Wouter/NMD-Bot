@@ -16,7 +16,7 @@
       v-if="message.image && message.image.is_accessory == false"
       class="message__attachment"
     >
-      <a :href="message.image" target="_blank">
+      <a :href="message.image.url" target="_blank">
         <img :src="message.image.url" :alt="message.image.text" />
       </a>
     </div>
