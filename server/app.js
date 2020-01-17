@@ -70,16 +70,14 @@ app.post('/webhook', (req, res) => {
             client.message(text)
               .then((intent) => handleMessage(intent))
               .then((handledMessage) => {
-                const {
-                  message: replyMessage, image, link, linkText,
-                } = handledMessage;
+                const { message: replyMessage, image, link } = handledMessage;
                 if (image && link) {
                 // reply with message and image+button combo
                   messenger.fbMessage(sender, replyMessage);
-                  messenger.fbInfoCard(sender, replyMessage, image, link, linkText);
+                  messenger.fbInfoCard(sender, replyMessage, image, link);
                 } else {
                   if (link) {
-                    messenger.fbLinkMessage(sender, replyMessage, link, linkText);
+                    messenger.fbLinkMessage(sender, replyMessage, link);
                   } else {
                     messenger.fbMessage(sender, replyMessage);
                   }

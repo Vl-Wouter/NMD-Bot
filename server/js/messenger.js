@@ -41,7 +41,7 @@ class Messenger {
             attachment: {
               type: "image",
               payload: {
-                url: image
+                url: image.url
               }
             }
           }
@@ -61,7 +61,7 @@ class Messenger {
     });
   }
 
-  fbLinkMessage = (id, text, link, linkText) => {
+  fbLinkMessage = (id, text, link) => {
     const body = JSON.stringify({
         recipient: {
             id: id
@@ -74,8 +74,8 @@ class Messenger {
                 text: text,
                 buttons:[{
                   type: "web_url",
-                  url: link,
-                  title: linkText
+                  url: link.url,
+                  title: link.text
                 }]
               }
             }
@@ -96,7 +96,9 @@ class Messenger {
     });
   }
 
-  fbInfoCard = (id, text, image, link, linkText) => {
+  fbInfoCard = (id, text, image, link) => {
+    console.log(image, link);
+    
     const body = JSON.stringify({
         recipient: {
             id: id
@@ -108,11 +110,11 @@ class Messenger {
                 template_type: "generic",
                 image_aspect_ratio: "square",
                 elements: [{
-                    title: linkText,
-                    image_url: image,
+                    title: link.text,
+                    image_url: image.url,
                     default_action: {
                     type: "web_url",
-                    url: link,
+                    url: link.url,
                     webview_height_ratio: "tall",
                     }
                 }],

@@ -5,6 +5,7 @@ class BotResponse {
     this.link = link;
     this.linkText = linkText;
   }
+  
 }
 
 export default BotResponse;
