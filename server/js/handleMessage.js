@@ -2,6 +2,7 @@ import handleGreeting from './entities/greeting';
 import handleGetPerson from './entities/person';
 import handleWeather from './entities/weather';
 import handleGetSchedule from './entities/schedule';
+import handleGetStudyGuide from './entities/studyGuide';
 import handleExplain from './entities/explain';
 
 // Get primary intent from the entities
@@ -36,6 +37,9 @@ const handleMessage = async ({ entities }) => {
           return response;
         case 'get_schedule':
           response = await handleGetSchedule(primary.intent);
+          return response;
+        case 'get_study_guide':
+          response = await handleGetStudyGuide(primary.intent);
           return response;
         case 'explain_NMD':
           response = await handleExplain(primary.intent);

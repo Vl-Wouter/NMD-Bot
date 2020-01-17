@@ -9,7 +9,9 @@
       </a>
     </div>
     <div v-if="message.image" class="message__attachment">
-      <img :src="message.image" alt="image" />
+      <a :href="message.image" target="_blank">
+        <img :src="message.image" alt="image" />
+      </a>
     </div>
     <p class="message__author">
       {{ message.author === "bot" ? "NMD-Bot" : "You" }}
