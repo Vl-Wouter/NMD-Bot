@@ -1,6 +1,7 @@
 import http from 'http';
 import socket from 'socket.io';
 import mongoose from 'mongoose';
+import consola from 'consola';
 import { app, client } from './app';
 import config from './config';
 import handleMessage from './js/handleMessage';
@@ -17,11 +18,10 @@ const io = socket(server);
 io.on('connection', (socket) => {
   consola.info('A user connected');
   socket.emit('reply', {
-    message: "Hi there! I'm NMD-Bot. Welcome to my app!",
+    message: 'Hey! Ik ben NMD-Bot. Als je iets wil weten over NMD, Undefined of de campus moet je het maar vragen 😄. If it is easier for you, I can also answer some questions in English',
   });
   socket.on('message', async (msg) => {
-    const intents = await client.message(msg);
-    const reply = await handleMessage(intents);
+    const reply = await handleMessage(msg, client);
     socket.emit('reply', reply);
   });
   socket.on('disconnect', () => {
@@ -30,11 +30,11 @@ io.on('connection', (socket) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Listening on ${PORT}`);
+  consola.ready(`Listening on ${PORT}`);
 });
 
 // connect to mongodb
 mongoose.connect(config.db.token);
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.on('error', consola.error.bind(console, 'MongoDB connection error:'));

@@ -1,13 +1,14 @@
-import filterImages from '../helpers/filterImages';
+import { filterImages, getRandom } from '../helpers';
+import responses from '../data/responses.json';
 
-const handleGreeting = async (intent) => {
+const handleGreeting = async (intent, language) => {
   try {
     if (intent === 'prequel_greeting') {
       const response = await fetch('https://www.reddit.com/r/PrequelMemes.json');
       const data = await response.json();
       const posts = filterImages(data.data.children);
       return {
-        message: 'General Kenobi!',
+        message: getRandom(responses.prequel_greeting),
         image: {
           url: posts[Math.floor(Math.random() * posts.length - 1)].data.url,
           text: 'Prequel meme',
@@ -16,7 +17,7 @@ const handleGreeting = async (intent) => {
       };
     }
     return {
-      message: 'Hello!',
+      message: getRandom(responses.default_greeting[language]),
     };
   } catch (error) {
     return {

@@ -1,15 +1,17 @@
 import { Person } from '../models';
+import responses from '../data/responses.json';
+import { fillString } from '../helpers';
 
-const handleGetPerson = async (entities) => {
+const handleGetPerson = async (entities, language) => {
   console.log(entities);
-  
+
   const { value } = entities.person_name[0];
   if ('person_name' in entities) {
     try {
       const person = await Person.findOne({ name: value }).exec();
       if (!person) {
         return {
-          message: `Sorry, ik kon ${value} niet vinden in de lijst.`,
+          message: fillString(responses.error.not_found[language], [value]),
           image: null,
           activeIntent: null,
         };
