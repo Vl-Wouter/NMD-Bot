@@ -4,7 +4,8 @@ import handleWeather from './entities/weather';
 import handleGetSchedule from './entities/schedule';
 import handleGetStudyGuide from './entities/studyGuide';
 import handleExplain from './entities/explain';
-import { detectFromString } from './helpers';
+import { detectFromString, getRandom } from './helpers';
+import responses from './data/responses.json';
 
 // Initialize active intent
 let activeIntent = null;
@@ -46,7 +47,7 @@ const handleMessage = async (message, client) => {
           response = await handleGetPerson(entities, language);
           break;
         case 'get_temperature':
-          response = await handleWeather(primary, entities);
+          response = await handleWeather(primary, entities, language);
           break;
         case 'get_schedule':
           response = await handleGetSchedule(primary);
@@ -62,7 +63,7 @@ const handleMessage = async (message, client) => {
           break;
         default:
           response = {
-            message: 'Can you please repeat that?',
+            message: getRandom(responses.error.unknown[language]),
             image: null,
             activeIntent: null,
           };
@@ -72,7 +73,7 @@ const handleMessage = async (message, client) => {
     }
   }
   return {
-    message: 'Woah buddy, text only please... 😠',
+    message: getRandom(responses.error.unknown[language]),
   };
 };
 
