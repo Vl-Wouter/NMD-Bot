@@ -41,6 +41,7 @@
 <script>
 import Message from "./components/Message";
 import ChatForm from "./components/ChatForm";
+
 export default {
   name: "app",
   components: {

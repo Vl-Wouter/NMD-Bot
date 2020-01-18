@@ -1,9 +1,11 @@
 import handleGreeting from './entities/greeting';
 import handleGetPerson from './entities/person';
+import handleGetRandomPerson from './entities/person';
 import handleWeather from './entities/weather';
 import handleGetSchedule from './entities/schedule';
 import handleGetStudyGuide from './entities/studyGuide';
 import handleExplain from './entities/explain';
+import handleContact from './entities/contact';
 
 // Initialize active intent
 let activeIntent = null;
@@ -41,6 +43,9 @@ const handleMessage = async ({ entities }) => {
         case 'get_person':
           response = await handleGetPerson(entities);
           break;
+        case 'get_random_person':
+            response = await handleGetRandomPerson(entities);
+            break;
         case 'get_temperature':
           response = await handleWeather(primary, entities);
           break;
@@ -56,6 +61,9 @@ const handleMessage = async ({ entities }) => {
         case 'explain_undefined':
           response = await handleExplain(primary);
           break;
+        case 'get_contact':
+            response = await handleContact(primary);
+            break;
         default:
           response = {
             message: 'Can you please repeat that?',

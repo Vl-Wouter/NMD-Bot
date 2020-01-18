@@ -9,7 +9,7 @@
       />
       <p v-emoji>{{ message.message }}</p>
       <p v-if="message.link">
-        <a :href="message.link.url">{{ message.link.text }}</a>
+        <a :href="message.link.url" target="_blank">{{ message.link.text }}</a>
       </p>
     </div>
     <div
