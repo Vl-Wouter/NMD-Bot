@@ -1,6 +1,5 @@
 import handleGreeting from './entities/greeting';
-import handleGetPerson from './entities/person';
-import handleGetRandomPerson from './entities/person';
+import { handleGetPerson, handleGetRandomPerson } from './entities/person';
 import handleWeather from './entities/weather';
 import handleGetSchedule from './entities/schedule';
 import handleGetStudyGuide from './entities/studyGuide';
