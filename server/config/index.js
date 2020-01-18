@@ -28,6 +28,9 @@ const config = {
     'nl',
     'en',
   ],
+  session: {
+    secret: process.env.SESSION_SECRET,
+  },
 };
 
 export default config;
