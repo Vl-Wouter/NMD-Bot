@@ -4,6 +4,7 @@ import handleWeather from './entities/weather';
 import handleGetSchedule from './entities/schedule';
 import handleGetStudyGuide from './entities/studyGuide';
 import handleExplain from './entities/explain';
+import { detectFromString } from './helpers';
 
 // Initialize active intent
 let activeIntent = null;
@@ -24,22 +25,25 @@ const getPrimaryIntent = (entities) => {
 
 /**
  * Handles a message based on intents and builds a response
- * @param {Object} request
+ * @param {String} message
  */
-const handleMessage = async ({ entities }) => {
+const handleMessage = async (message, client) => {
+  const { entities } = await client.message(message);
+  const language = detectFromString(message);
+  console.log(language);
   if (entities) {
     if (getPrimaryIntent(entities)) {
       const primary = getPrimaryIntent(entities);
       let response = {};
       switch (primary) {
         case 'default_greeting':
-          response = await handleGreeting(primary);
+          response = await handleGreeting(primary, language);
           break;
         case 'prequel_greeting':
-          response = await handleGreeting(primary);
+          response = await handleGreeting(primary, language);
           break;
         case 'get_person':
-          response = await handleGetPerson(entities);
+          response = await handleGetPerson(entities, language);
           break;
         case 'get_temperature':
           response = await handleWeather(primary, entities);

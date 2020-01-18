@@ -1,0 +1,22 @@
+{
+  "default_greeting": {
+    "nl": [
+      "Hallo!",
+      "Hey!",
+      "Hallo! Als je een vraag hebt laat je het maar weten. 😉",
+      "Hey! Heb je een vraag?"
+    ],
+    "en": [
+      "Hi!",
+      "Hey! Do you have any questions?",
+      "Hi there! If you have a question, be sure to let me know."
+    ]
+  },
+  "prequel_greeting": ["General Kenobi!", "Ironic.", "It's treason, then"],
+  "error": {
+    "not_found": {
+      "nl": "Sorry, maar ik kan $1 niet vinden in de lijst.",
+      "en": "I'm sorry, but I'm unable to find $1"
+    }
+  }
+}
