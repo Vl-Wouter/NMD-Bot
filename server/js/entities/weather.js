@@ -1,4 +1,3 @@
-import consolaGlobalInstance from 'consola';
 import config from '../../config';
 import responses from '../data/responses.json';
 import { getRandom, fillString } from '../helpers';
@@ -7,7 +6,9 @@ const handleWeather = async (intent, entities, language) => {
   if (language === 'en') {
     return {
       message: responses.error.not_available[language],
-      activeIntent: null,
+      session: {
+        active_conversation: null,
+      },
     };
   }
   try {
@@ -23,17 +24,27 @@ const handleWeather = async (intent, entities, language) => {
           weather.temperatureMin,
           weather.temperatureMax,
         ]),
-        activeIntent: null,
+        session: {
+          active_conversation: null,
+        },
       };
     }
     return {
       message: 'Voor welke datum wil je het weer weten? 🤔',
-      activeIntent: intent,
+      session: {
+        active_conversation: {
+          intent,
+          language,
+        },
+      },
     };
   } catch (error) {
     console.log(error);
     return {
       message: error.message,
+      session: {
+        active_conversation: null,
+      },
     };
   }
 };

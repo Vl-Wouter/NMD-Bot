@@ -15,8 +15,16 @@
           }}</span>
         </p>
         <p>
+          Active session: <br />
+          {{ activeSession ? activeSession : "None" }}
+        </p>
+        <p>
           Active Conversation:
           {{ activeConversation ? activeConversation : "None" }}
+        </p>
+        <p>
+          Active Language:
+          {{ activeLanguage ? activeLanguage : "None specified" }}
         </p>
       </main>
     </section>
@@ -51,6 +59,8 @@ export default {
     isConnected: false,
     isTyping: false,
     activeConversation: null,
+    activeSession: null,
+    activeLanguage: null,
     loader: { message: "...", author: "bot" },
     chat: []
   }),
@@ -77,12 +87,22 @@ export default {
     },
     disconnect() {
       this.isConnected = false;
+      this.sessionID = null;
     },
     reply(msg) {
-      this.chat.push({ ...msg, author: "bot" });
-      this.activeConversation = msg.activeIntent ? msg.activeIntent : null;
+      this.chat.push({ ...msg.reply, author: "bot" });
+      if (msg.session.sessionID) this.activeSession = msg.session.sessionID;
+      console.table(msg);
       this.updateChatScroll();
       this.isTyping = false;
+      this.activeConversation = msg.session.active_conversation
+        ? msg.session.active_conversation.intent
+        : null;
+      if (msg.session.language) {
+        this.activeLanguage = msg.session.language;
+      } else {
+        this.activeLanguage = null;
+      }
     }
   }
 };

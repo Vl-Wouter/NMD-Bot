@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import consola from 'consola';
 import { createEventAdapter } from '@slack/events-api';
 import { WebClient } from '@slack/web-api';
+import session from 'express-session';
 import config from './config';
 import handleMessage from './js/handleMessage';
 import BotResponse from './js/response';
@@ -14,6 +15,12 @@ import slackHandler from './js/slackHandler';
 const app = express();
 const slackEvents = createEventAdapter(config.slack.signing_secret);
 const slackWeb = new WebClient(config.slack.token);
+const expressSession = session({
+  secret: config.session.secret,
+  resave: true,
+  saveUninitialized: true,
+});
+app.use(expressSession);
 app.use('/slack/events', slackEvents.expressMiddleware());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -106,4 +113,4 @@ slackEvents.on('app_mention', async (event) => {
 app.get('/', (req, res) => res.send('HALLOOOOOOOOOO'));
 
 
-export { app, client };
+export { app, client, expressSession };
