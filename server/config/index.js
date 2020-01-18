@@ -24,6 +24,13 @@ const config = {
     signing_secret: process.env.SLACK_SIGNING_SECRET,
     token: process.env.SLACK_TOKEN,
   },
+  availableLanguages: [
+    'nl',
+    'en',
+  ],
+  session: {
+    secret: process.env.SESSION_SECRET,
+  },
 };
 
 export default config;

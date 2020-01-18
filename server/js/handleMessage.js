@@ -6,78 +6,104 @@ import handleGetSchedule from './entities/schedule';
 import handleGetStudyGuide from './entities/studyGuide';
 import handleExplain from './entities/explain';
 import handleContact from './entities/contact';
+import { detectFromString, getRandom } from './helpers';
+import responses from './data/responses.json';
+import handleLanguage from './entities/language';
 
 // Initialize active intent
-let activeIntent = null;
 
 /**
  * Get primary or active intent from entitylist
  * @param {Object[]} entities
  */
-const getPrimaryIntent = (entities) => {
-  if (activeIntent) {
-    return activeIntent;
+const getPrimaryIntent = (entities, session) => {
+  if (session.active_conversation) {
+    return session.active_conversation;
   }
-  if (entities.intent && activeIntent == null) {
-    return entities.intent[0].value;
+  if (entities.intent && session.active_conversation == null) {
+    return {
+      intent: entities.intent[0].value,
+      language: null,
+    };
   }
   return null;
 };
 
 /**
  * Handles a message based on intents and builds a response
- * @param {Object} request
+ * @param {String} message
  */
-const handleMessage = async ({ entities }) => {
-  if (entities) {
-    if (getPrimaryIntent(entities)) {
-      const primary = getPrimaryIntent(entities);
-      let response = {};
-      switch (primary) {
-        case 'default_greeting':
-          response = await handleGreeting(primary);
-          break;
-        case 'prequel_greeting':
-          response = await handleGreeting(primary);
-          break;
-        case 'get_person':
-          response = await handleGetPerson(entities);
-          break;
-        case 'get_random_person':
-            response = await handleGetRandomPerson(entities);
+const handleMessage = async (message, client, session) => {
+  try {
+    const { entities } = await client.message(message);
+    let language = session.language ? session.language : detectFromString(message);
+    if (entities) {
+      if (getPrimaryIntent(entities, session)) {
+        const { intent, language: activeLang } = getPrimaryIntent(entities, session);
+        if (activeLang) language = activeLang;
+        let response = {};
+        switch (intent) {
+          case 'default_greeting':
+            response = await handleGreeting(intent, language);
             break;
-        case 'get_temperature':
-          response = await handleWeather(primary, entities);
-          break;
-        case 'get_schedule':
-          response = await handleGetSchedule(primary);
-          break;
-        case 'get_study_guide':
-          response = await handleGetStudyGuide(primary);
-          break;
-        case 'explain_NMD':
-          response = await handleExplain(primary);
-          break;
-        case 'explain_undefined':
-          response = await handleExplain(primary);
-          break;
-        case 'get_contact':
-            response = await handleContact(primary);
+          case 'prequel_greeting':
+            response = await handleGreeting(intent, language);
             break;
-        default:
-          response = {
-            message: 'Can you please repeat that?',
-            image: null,
-            activeIntent: null,
-          };
+          case 'get_person':
+            response = await handleGetRandomPerson(entities, language);
+            break;
+          case 'get_random_person':
+            response = await handleGetPerson(entities, language);
+            break;
+          case 'get_contact':
+            response = await handleContact(entities, language);
+            break;
+          case 'get_temperature':
+            response = await handleWeather(intent, entities, language);
+            break;
+          case 'get_schedule':
+            response = await handleGetSchedule(intent);
+            break;
+          case 'get_study_guide':
+            response = await handleGetStudyGuide(intent);
+            break;
+          case 'explain_NMD':
+            response = await handleExplain(intent);
+            break;
+          case 'explain_undefined':
+            response = await handleExplain(intent);
+            break;
+          case 'set_language':
+            response = await handleLanguage(entities, language);
+            break;
+          default:
+            response = {
+              message: getRandom(responses.error.unknown[language]),
+              image: null,
+              session: {
+                active_conversation: null,
+              },
+            };
+        }
+        if (response.session) {
+          Object.entries(response.session).forEach(([key, value]) => {
+            session[key] = value;
+            session.save();
+          });
+        }
+        const { session: replySession, ...reply } = response;
+        return reply;
       }
-      activeIntent = response.activeIntent;
-      return response;
     }
+    return {
+      message: getRandom(responses.error.unknown[language]),
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      message: err.message,
+    };
   }
-  return {
-    message: 'Woah buddy, text only please... 😠',
-  };
 };
 
 // old handleMessage, for temporary reference

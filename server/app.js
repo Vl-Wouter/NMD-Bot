@@ -1,9 +1,10 @@
-import { Wit, log, interactive } from 'node-wit';
+import { Wit } from 'node-wit';
 import express from 'express';
 import bodyParser from 'body-parser';
 import consola from 'consola';
 import { createEventAdapter } from '@slack/events-api';
 import { WebClient } from '@slack/web-api';
+import session from 'express-session';
 import config from './config';
 import handleMessage from './js/handleMessage';
 import BotResponse from './js/response';
@@ -14,6 +15,12 @@ import slackHandler from './js/slackHandler';
 const app = express();
 const slackEvents = createEventAdapter(config.slack.signing_secret);
 const slackWeb = new WebClient(config.slack.token);
+const expressSession = session({
+  secret: config.session.secret,
+  resave: true,
+  saveUninitialized: true,
+});
+app.use(expressSession);
 app.use('/slack/events', slackEvents.expressMiddleware());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -34,10 +41,9 @@ app.post('/app', async (req, res) => {
   consola.info('Message received from client');
   const { message } = req.body;
   try {
-    const intent = await client.message(message);
     const {
       message: replyMessage, image, link, linkText,
-    } = await handleMessage(intent);
+    } = await handleMessage(message);
     consola.success('Replied to client with message');
     res.json(new BotResponse(replyMessage, image, link, linkText));
   } catch (error) {
@@ -67,8 +73,7 @@ app.post('/webhook', (req, res) => {
           if (attachments) {
             messenger.fbMessage(sender, 'Heel leuk dat je me bijlagen doorstuurt, maar ik weet niet wat ik hier mee moet doen 🤔');
           } else if (text) {
-            client.message(text)
-              .then((intent) => handleMessage(intent))
+            handleMessage(text)
               .then((handledMessage) => {
                 const { message: replyMessage, image, link } = handledMessage;
                 if (image && link) {
@@ -99,7 +104,6 @@ app.post('/webhook', (req, res) => {
  */
 slackEvents.on('app_mention', async (event) => {
   const reply = await slackHandler(client, event);
-  console.log(reply);
   slackWeb.chat.postMessage({
     channel: event.channel,
     blocks: reply,
@@ -109,4 +113,4 @@ slackEvents.on('app_mention', async (event) => {
 app.get('/', (req, res) => res.send('HALLOOOOOOOOOO'));
 
 
-export { app, client };
+export { app, client, expressSession };
