@@ -13,10 +13,47 @@
     ]
   },
   "prequel_greeting": ["General Kenobi!", "Ironic.", "It's treason, then"],
+  "get_temperature": {
+    "replies": {
+      "nl": [
+        "Het weer voor $1 op de campus is: $2 De temperaturen liggen tussen $3 en $4 graden."
+      ],
+      "en": [
+        "The weather for $1 at our campus is: $2 The temperatures are between $3 and $4 degrees."
+      ]
+    },
+    "questions": {
+      "nl": [
+        "Kan je me $1 geven om het weer te kunnen vinden?",
+        "Ik heb $1 nodig om het weer op te zoeken.",
+        "Zonder $1 kan ik het weer niet vinden."
+      ],
+      "en": [
+        "Can you give me $1 so I can get the weather?",
+        "$1 would be useful to get the weather..."
+      ]
+    }
+  },
   "error": {
     "not_found": {
       "nl": "Sorry, maar ik kan $1 niet vinden in de lijst.",
       "en": "I'm sorry, but I'm unable to find $1"
+    },
+    "not_available": {
+      "nl": "Deze feature is helaas niet beschikbaar in de huidige taal.",
+      "en": "This feature is not available in the current language."
+    },
+    "unknown": {
+      "nl": [
+        "Kan je dit herhalen?",
+        "Dat heb ik niet verstaan",
+        "Oeps, dit heb ik niet begrepen."
+      ],
+      "en": [
+        "I'm sorry, but I cannot understand this sentence at the moment.",
+        "I did not understand that",
+        "I'm sorry, can you repeat that?"
+      ]
     }
   }
 }
