@@ -36,6 +36,14 @@ export default {
   name: "ChatForm",
   methods: {
     toggleRecordSpeech() {
+      //check what language the user has selected
+      if (this.$parent.activeLanguage == "en") {
+        speechRecognition.recognition.lang = "en-US";
+      } else {
+        speechRecognition.recognition.lang = "nl-BE";
+      }
+
+      //record speech in selected language
       if (speechRecognition.recording) {
         speechRecognition.recognition.stop();
       } else {

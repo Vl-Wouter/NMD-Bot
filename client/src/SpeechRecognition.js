@@ -8,7 +8,7 @@ class SpeechRecognition {
       this.recognition = new window.webkitSpeechRecognition();
       this.recognition.continuous = false;
       this.recognition.interimResults = true;
-      this.recognition.lang = "en-US";
+      this.recognition.lang = "nl-BE";
       this.recognition.maxAlternatives = 1;
       this.recording = false;
     }
