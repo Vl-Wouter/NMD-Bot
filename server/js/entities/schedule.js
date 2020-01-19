@@ -1,8 +1,11 @@
-const handleGetSchedule = async () => ({
-  message: 'Het lessenrooster is te vinden op mijnrooster.arteveldehogeschool.be',
+import responses from '../data/responses.json';
+import { fillString } from '../helpers';
+
+const handleGetSchedule = async (language) => ({
+  message: responses.schedule.get_schedule[language],
   link: {
     url: 'https://mijnrooster.arteveldehogeschool.be',
-    text: 'Klik hier om het lessenrooster te bekijken',
+    text: responses.schedule.schedule_link[language],
   },
   activeIntent: null,
 });
