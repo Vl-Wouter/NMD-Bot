@@ -73,7 +73,7 @@ app.post('/webhook', (req, res) => {
           if (attachments) {
             messenger.fbMessage(sender, 'Heel leuk dat je me bijlagen doorstuurt, maar ik weet niet wat ik hier mee moet doen 🤔');
           } else if (text) {
-            handleMessage(text)
+            handleMessage(text, client, null)
               .then((handledMessage) => {
                 const { message: replyMessage, image, link } = handledMessage;
                 if (image && link) {

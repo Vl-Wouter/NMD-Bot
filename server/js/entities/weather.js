@@ -3,8 +3,14 @@ import responses from '../data/responses.json';
 import { getRandom, fillString } from '../helpers';
 
 const handleWeather = async (intent, entities, language) => {
-console.log(intent, entities, language);
-
+  if (language === 'en') {
+    return {
+      message: responses.error.not_available[language],
+      session: {
+        active_conversation: null,
+      },
+    };
+  }
   try {
     if ('datetime' in entities) {
       const time = entities.datetime[0].value;
@@ -24,7 +30,7 @@ console.log(intent, entities, language);
       };
     }
     return {
-      message: getRandom(responses.get_temperature.questions[language]),
+      message: 'Voor welke datum wil je het weer weten? 🤔',
       session: {
         active_conversation: {
           intent,

@@ -110,32 +110,4 @@ const handleMessage = async (message, client, session) => {
   }
 };
 
-// old handleMessage, for temporary reference
-// in the current version wit will always return the 'intent' entity, with potentially
-// an additional entity (e.g. 'name' or 'age')
-/*
-const handleMessage = async ({entities}) => {
-  if(entities) {
-    const entityKeys = Object.keys(entities);
-    console.log("entities");
-    console.log(entityKeys);
-    switch(entityKeys[0]) {
-      case "greeting":
-        const response = await handleGreeting(entities["greeting"]);
-        console.log(response);
-        return response;
-        break;
-      default:
-        return {
-          message: "Can you please repeat that?",
-          image: null,
-        }
-    }
-  }
-  return {
-    message: "Woah buddy, text only please...",
-  }
-}
-*/
-
 export default handleMessage;

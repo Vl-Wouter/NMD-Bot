@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
       sessionID: socket.handshake.sessionID,
     },
   });
-  socket.on('message', async (msg) => {
+  socket.on('message', async (msg) => {    
     const reply = await handleMessage(msg, client, socket.handshake.session);
     const { session } = socket.handshake;
     socket.emit('reply', { reply, session });
