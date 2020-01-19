@@ -49,10 +49,10 @@ const handleMessage = async (message, client, session) => {
             response = await handleGreeting(intent, language);
             break;
           case 'get_person':
-            response = await handleGetRandomPerson(entities, language);
+            response = await handleGetPerson(entities, language);
             break;
           case 'get_random_person':
-            response = await handleGetPerson(entities, language);
+            response = await handleGetRandomPerson(language);
             break;
           case 'get_contact':
             response = await handleContact(entities, language);

@@ -4,9 +4,8 @@ import { fillString } from '../helpers';
 
 
 const handleGetPerson = async (entities, language) => {
-  console.log(entities);
-
   const { value } = entities.person_name[0];
+  
   if ('person_name' in entities) {
     try {
       const person = await Person.findOne({ name: value }).exec();
@@ -18,8 +17,14 @@ const handleGetPerson = async (entities, language) => {
         };
       }
 
+      let description ="";
+      if(language == 'nl'){
+        description = person.descriptionNL;
+      }else{
+        description = person.description;
+      }
       return {
-        message: person.description,
+        message: description,
         image: {
           url: person.image,
           text: person.name,
@@ -29,14 +34,14 @@ const handleGetPerson = async (entities, language) => {
     } catch (err) {
       console.log(err);
       return {
-        message: 'Er is iets misgelopen bij het ophalen van deze persoon.',
+        message: responses.error.get_person_error[language],
         image: null,
         activeIntent: null,
       };
     }
   } else {
     return {
-      message: 'Ik kan geen persoon opzoeken zonder een naam 🤷‍♂️',
+      message: responses.error.get_person_error[language],
       image: null,
       activeIntent: null,
     };
@@ -57,22 +62,28 @@ const handleGetRandomPerson = async (language) => {
       };
     }
 
-    return {
-      message: person.description,
-      image: {
-        url: person.image,
-        text: person.name,
-        is_accessory: false,
-      },
-    };
+    let description ="";
+      if(language == 'nl'){
+        description = person.descriptionNL;
+      }else{
+        description = person.description;
+      }
+      return {
+        message: description,
+        image: {
+          url: person.image,
+          text: person.name,
+          is_accessory: false,
+        },
+      };
   } catch (err) {
     console.log(err);
     return {
-      message: 'Er is iets misgelopen bij het ophalen van een teamlid.',
+      message: responses.error.get_person_error[language],
       image: null,
       activeIntent: null,
     };
   }
 };
 
-export default handleGetPerson;
+export {handleGetPerson, handleGetRandomPerson};

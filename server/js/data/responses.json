@@ -34,6 +34,10 @@
       ]
     }
   },
+  "get_person": {
+    "nl": "persoon gevonden",
+    "en": "found 'im"
+  },
   "error": {
     "not_found": {
       "nl": "Sorry, maar ik kan $1 niet vinden in de lijst.",
@@ -42,6 +46,14 @@
     "not_available": {
       "nl": "Deze feature is helaas niet beschikbaar in de huidige taal.",
       "en": "This feature is not available in the current language."
+    },
+    "get_person_error": {
+      "nl": "Er is iets foutgelopen bij het ophalen van dit teamlid.",
+      "en": "Something went wrong when trying to find this team member."
+    },
+    "get_person_no_name": {
+      "nl": "Ik kan geen persoon opzoeken zonder een naam. 🤷‍♂️",
+      "en": "I can't find a team member without a name. 🤷‍♂️"
     },
     "unknown": {
       "nl": [
