@@ -90,7 +90,7 @@ const handleMessage = async (message, client, session) => {
             session.save();
           });
         }
-        if (!session) {
+        if (!session && response.session) {
           response = {
             message: 'Sessions are not supported for this client.',
           };
