@@ -105,6 +105,14 @@
       "nl": "Ik kan geen persoon opzoeken zonder een naam. 🤷‍♂️",
       "en": "I can't find a team member without a name. 🤷‍♂️"
     },
+    "get_project_error": {
+      "nl": "Er is iets foutgelopen bij het ophalen van dit project.",
+      "en": "Something went wrong when trying to find this project."
+    },
+    "get_project_no_name": {
+      "nl": "Ik kan geen project opzoeken zonder een naam. 🤷‍♂️",
+      "en": "I can't find a project without a name. 🤷‍♂️"
+    },
     "unknown": {
       "nl": [
         "Kan je dit herhalen?",

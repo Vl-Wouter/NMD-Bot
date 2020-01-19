@@ -1,5 +1,6 @@
 import handleGreeting from './entities/greeting';
 import { handleGetPerson, handleGetRandomPerson } from './entities/person';
+import { handleGetProject, handleGetRandomProject } from './entities/project';
 import handleWeather from './entities/weather';
 import handleGetSchedule from './entities/schedule';
 import handleGetStudyGuide from './entities/studyGuide';
@@ -53,6 +54,12 @@ const handleMessage = async (message, client, session) => {
             break;
           case 'get_random_person':
             response = await handleGetRandomPerson(language);
+            break;
+          case 'get_project':
+            response = await handleGetProject(entities, language);
+            break;
+          case 'get_random_project':
+            response = await handleGetRandomProject(language);
             break;
           case 'get_contact_details':
             response = await handleContact(language);
