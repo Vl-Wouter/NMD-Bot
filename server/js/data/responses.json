@@ -24,19 +24,69 @@
     },
     "questions": {
       "nl": [
-        "Kan je me $1 geven om het weer te kunnen vinden?",
-        "Ik heb $1 nodig om het weer op te zoeken.",
-        "Zonder $1 kan ik het weer niet vinden."
+        "Kan je me een datum geven om het weer te kunnen vinden?",
+        "Ik heb een datum nodig om het weer op te zoeken.",
+        "Zonder een datum kan ik het weer niet vinden."
       ],
       "en": [
-        "Can you give me $1 so I can get the weather?",
-        "$1 would be useful to get the weather..."
+        "Can you give me a date so I can get the weather?",
+        "A date would be useful to get the weather..."
       ]
     }
   },
   "get_person": {
     "nl": "persoon gevonden",
     "en": "found 'im"
+  },
+  "schedule": {
+    "get_schedule": {
+      "nl": "Het lessenrooster is te vinden op mijnrooster.arteveldehogeschool.be",
+      "en": "You can find the schedule on mijnrooster.arteveldehogeschool.be"
+    },
+    "schedule_link": {
+      "nl": "Lessenrooster",
+      "en": "Class schedule"
+    }
+  },
+  "study_guide": {
+    "get_study_guide": {
+      "nl": "Een opleidingsgids, coming right up!",
+      "en": "I've got your study guide, right here!"
+    },
+    "study_guide_link": {
+      "nl": "Opleindingsgids",
+      "en": "Study guide"
+    }
+  },
+  "contact": {
+    "get_contact": {
+      "nl": "Je kan ons contacteren via email op info@arteveldehs.be, of op ons telefoonnummer 09 234 86 00. Je kan ook altijd een berichtje achterlaten op onze website:",
+      "en": "You can reach us via email at info@arteveldehs.be, of on our phone number 09 234 86 00. You can also always leave a message on our website:"
+    },
+    "contact_link": {
+      "nl": "Contact",
+      "en": "Contact"
+    }
+  },
+  "explain_nmd": {
+    "get_explain_nmd": {
+      "nl": "NMD staat voor New Media Development. Het is een keuzetraject binnen de opleiding Grafische en Digitale Media bij de Arteveldehogeschool in Gent.",
+      "en": "NMD means voor New Media Development. It's a course within the degree programme Grafische en Digitale Media at Arteveldehogeschool in Ghent."
+    },
+    "explain_nmd_link": {
+      "nl": "Meer info",
+      "en": "More info"
+    }
+  },
+  "explain_undefined": {
+    "get_explain_undefined": {
+      "nl": "Undefined NMD is een web agency bestaande uit derdejaarsstudenten New Media Development van de Arteveldehogeschool in Gent. Met de tagline We Build Digital Stuff werken we verschillende digitale projecten uit van beginschets tot eindproduct.",
+      "en": "Undefined NMD is a web agency existing of third year students New Media Development of university college Arteveldehogeschool in Ghent. With the tagline We Build Digital Stuff we produce different digitale projects from early sketch to finished product."
+    },
+    "explain_undefined_link": {
+      "nl": "Meer info",
+      "en": "More info"
+    }
   },
   "error": {
     "not_found": {

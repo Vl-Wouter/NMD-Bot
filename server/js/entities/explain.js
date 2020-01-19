@@ -1,7 +1,10 @@
-const handleExplain = async (intent) => {
+import responses from '../data/responses.json';
+import { fillString } from '../helpers';
+
+const handleExplain = async (intent, language) => {
   if (intent === 'explain_NMD') {
     return {
-      message: 'NMD staat voor New Media Development. Het is een keuzetraject binnen de opleiding Grafische en Digitale Media bij de Arteveldehogeschool in Gent.',
+      message: responses.explain_nmd.get_explain_nmd[language],
       image: {
         url: 'https://i.imgur.com/mL1SCAQ.jpg',
         text: 'NMD',
@@ -9,13 +12,13 @@ const handleExplain = async (intent) => {
       },
       link: {
         url: 'https://www.arteveldehogeschool.be/opleidingen/bachelor/grafische-en-digitale-media/new-media-development-multimediaproductie',
-        text: 'Meer info over de opleiding',
+        text: responses.explain_nmd.explain_nmd_link[language],
       },
       activeIntent: null,
     };
   } if (intent === 'explain_undefined') {
     return {
-      message: 'Undefined NMD is een web agency bestaande uit derdejaarsstudenten New Media Development van de Arteveldehogeschool in Gent. Met de tagline We Build Digital Stuff werken we verschillende digitale projecten uit van beginschets tot eindproduct.',
+      message: responses.explain_undefined.get_explain_undefined[language],
       image: {
         url: 'https://i.imgur.com/tqDiRbD.jpg',
         text: 'Undefined logo',
@@ -23,13 +26,13 @@ const handleExplain = async (intent) => {
       },
       link: {
         url: 'https://undefinednmd.gdm.gent/',
-        text: 'Meer info over Undefined vind je hier',
+        text: responses.explain_undefined.explain_undefined_link[language],
       },
       activeIntent: null,
     };
   }
   return {
-    message: 'Ik weet niet wat uit te leggen? Help?',
+    message: responses.error.unknown[language],
     activeIntent: null,
   };
 };

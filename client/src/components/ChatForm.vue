@@ -64,6 +64,7 @@ export default {
 
       speechRecognition.recognition.onend = function() {
         document.querySelector("#microphone").classList.remove("animating");
+        document.querySelector("#chatMessage").focus();
       };
     } else {
       console.log("bee");

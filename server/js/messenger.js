@@ -1,7 +1,6 @@
 import consola from 'consola';
 import config from '../config';
 
-
 class Messenger {
 
   constructor() {

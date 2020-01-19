@@ -54,23 +54,23 @@ const handleMessage = async (message, client, session) => {
           case 'get_random_person':
             response = await handleGetRandomPerson(language);
             break;
-          case 'get_contact':
-            response = await handleContact(entities, language);
+          case 'get_contact_details':
+            response = await handleContact(language);
             break;
           case 'get_temperature':
             response = await handleWeather(intent, entities, language);
             break;
           case 'get_schedule':
-            response = await handleGetSchedule(intent);
+            response = await handleGetSchedule(language);
             break;
           case 'get_study_guide':
-            response = await handleGetStudyGuide(intent);
+            response = await handleGetStudyGuide(language);
             break;
           case 'explain_NMD':
-            response = await handleExplain(intent);
+            response = await handleExplain(intent, language);
             break;
           case 'explain_undefined':
-            response = await handleExplain(intent);
+            response = await handleExplain(intent, language);
             break;
           case 'set_language':
             response = await handleLanguage(entities, language);
@@ -84,6 +84,7 @@ const handleMessage = async (message, client, session) => {
               },
             };
         }
+
         if (response.session) {
           Object.entries(response.session).forEach(([key, value]) => {
             session[key] = value;
