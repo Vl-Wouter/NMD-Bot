@@ -16,10 +16,10 @@ import handleLanguage from './entities/language';
  * @param {Object[]} entities
  */
 const getPrimaryIntent = (entities, session) => {
-  if (session.active_conversation) {
+  if (session && session.active_conversation) {
     return session.active_conversation;
   }
-  if (entities.intent && session.active_conversation == null) {
+  if (entities.intent) {
     return {
       intent: entities.intent[0].value,
       language: null,
@@ -35,7 +35,7 @@ const getPrimaryIntent = (entities, session) => {
 const handleMessage = async (message, client, session) => {
   try {
     const { entities } = await client.message(message);
-    let language = session.language ? session.language : detectFromString(message);
+    let language = session && session.language ? session.language : detectFromString(message);
     if (entities) {
       if (getPrimaryIntent(entities, session)) {
         const { intent, language: activeLang } = getPrimaryIntent(entities, session);
@@ -84,11 +84,16 @@ const handleMessage = async (message, client, session) => {
               },
             };
         }
-        if (response.session) {
+        if (session && response.session) {
           Object.entries(response.session).forEach(([key, value]) => {
             session[key] = value;
             session.save();
           });
+        }
+        if (!session) {
+          response = {
+            message: 'Sessions are not supported for this client.',
+          };
         }
         const { session: replySession, ...reply } = response;
         return reply;

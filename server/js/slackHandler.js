@@ -45,8 +45,7 @@ const formatForSlack = (message) => {
 
 export default async (client, event) => {
   consola.info(`Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`);
-  const intent = await client.message(event.text);
-  const reply = await handleMessage(intent);
+  const reply = await handleMessage(event.text, client, null);
   const formattedReply = formatForSlack(reply);
   return formattedReply;
 };
