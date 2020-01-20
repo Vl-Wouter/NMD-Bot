@@ -1,5 +1,6 @@
 import handleGreeting from './entities/greeting';
 import { handleGetPerson, handleGetRandomPerson } from './entities/person';
+import { handleGetProject, handleGetRandomProject } from './entities/project';
 import handleWeather from './entities/weather';
 import handleGetSchedule from './entities/schedule';
 import handleGetStudyGuide from './entities/studyGuide';
@@ -53,6 +54,12 @@ const handleMessage = async (message, client, session) => {
             break;
           case 'get_random_person':
             response = await handleGetRandomPerson(language);
+            break;
+          case 'get_project':
+            response = await handleGetProject(entities, language);
+            break;
+          case 'get_random_project':
+            response = await handleGetRandomProject(language);
             break;
           case 'get_contact_details':
             response = await handleContact(language);
@@ -109,33 +116,5 @@ const handleMessage = async (message, client, session) => {
     };
   }
 };
-
-// old handleMessage, for temporary reference
-// in the current version wit will always return the 'intent' entity, with potentially
-// an additional entity (e.g. 'name' or 'age')
-/*
-const handleMessage = async ({entities}) => {
-  if(entities) {
-    const entityKeys = Object.keys(entities);
-    console.log("entities");
-    console.log(entityKeys);
-    switch(entityKeys[0]) {
-      case "greeting":
-        const response = await handleGreeting(entities["greeting"]);
-        console.log(response);
-        return response;
-        break;
-      default:
-        return {
-          message: "Can you please repeat that?",
-          image: null,
-        }
-    }
-  }
-  return {
-    message: "Woah buddy, text only please...",
-  }
-}
-*/
 
 export default handleMessage;

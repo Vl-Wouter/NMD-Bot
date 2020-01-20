@@ -4,48 +4,58 @@ import { fillString } from '../helpers';
 
 
 const handleGetPerson = async (entities, language) => {
-  const { value } = entities.person_name[0];
+  if(entities.person_name){
+    const { value } = entities.person_name[0];
+
+    if ('person_name' in entities) {
+      try {
+        const person = await Person.findOne({ name: value }).exec();
+        if (!person) {
+          return {
+            message: fillString(responses.error.not_found[language], [value]),
+            image: null,
+            activeIntent: null,
+          };
+        }
   
-  if ('person_name' in entities) {
-    try {
-      const person = await Person.findOne({ name: value }).exec();
-      if (!person) {
+        let description ="";
+        if(language == 'nl'){
+          description = person.descriptionNL;
+        }else{
+          description = person.description;
+        }
         return {
-          message: fillString(responses.error.not_found[language], [value]),
+          message: description,
+          image: {
+            url: person.image,
+            text: person.name,
+            is_accessory: false,
+          },
+        };
+      } catch (err) {
+        console.log(err);
+        return {
+          message: responses.error.get_person_error[language],
           image: null,
           activeIntent: null,
         };
       }
-
-      let description ="";
-      if(language == 'nl'){
-        description = person.descriptionNL;
-      }else{
-        description = person.description;
-      }
-      return {
-        message: description,
-        image: {
-          url: person.image,
-          text: person.name,
-          is_accessory: false,
-        },
-      };
-    } catch (err) {
-      console.log(err);
+    } else {
       return {
         message: responses.error.get_person_error[language],
         image: null,
         activeIntent: null,
       };
     }
-  } else {
+  }else{
     return {
       message: responses.error.get_person_error[language],
       image: null,
       activeIntent: null,
     };
   }
+  
+ 
 };
 
 const handleGetRandomPerson = async (language) => {
