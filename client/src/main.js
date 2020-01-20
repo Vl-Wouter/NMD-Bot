@@ -10,7 +10,7 @@ import vuetwemoji from "vue-twemoji";
 Vue.use(
   new VueSocketIO({
     debug: true,
-    connection: "http://localhost:7777"
+    connection: "https://nmd-bot.herokuapp.com/"
   })
 );
 Vue.use(vuetwemoji);
