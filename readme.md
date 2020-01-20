@@ -11,15 +11,24 @@ at Artevelde University of Applied Sciences.
 Clone the GitHub repository and install all required dependencies:
 
 ```bash
+# Install main dev dependencies
+npm install
+
+# Install client dependencies
+cd client
+npm install
+
+#Install server dependencies
+cd server
 npm install
 ```
 
 Then copy the `.env.example` file, rename it to `.env` and add your keys.
 
-## Starting the server
+## Starting the dev environment
 
 ```bash
-npm run start
+npm run dev:all
 ```
 
 ## Running tests
@@ -37,7 +46,7 @@ npm run test
 * Wit.ai
 * Jest
 * Node.js
-* ...
+* Slack API
 
 ## Authors
 
